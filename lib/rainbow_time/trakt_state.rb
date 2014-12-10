@@ -1,5 +1,3 @@
-require './log_helper.rb'
-
 class TraktApiWrapper
   attr_reader :client, :config
 

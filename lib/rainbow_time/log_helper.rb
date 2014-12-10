@@ -1,9 +1,3 @@
-class Time
-  def self.timestamp
-    self.now.strftime("%F %T")
-  end
-end
-
 class Logger
   def log(level, msg)
     puts "#{Time.timestamp} #{level}  #{msg}"

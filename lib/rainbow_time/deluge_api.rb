@@ -1,6 +1,3 @@
-require 'deluge'
-require 'pp'
-
 P_DO_NOT_DOWNLOAD = 0
 P_NORMAL = 1
 P_HIGH = 5
