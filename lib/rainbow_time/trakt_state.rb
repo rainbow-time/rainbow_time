@@ -1,4 +1,4 @@
-class TraktApiWrapper
+class RainbowTime::TraktApiWrapper
   attr_reader :client, :config
 
   def initialize(client, config)
@@ -11,10 +11,15 @@ class TraktApiWrapper
   def with_auth
     @with_auth.clone
   end
+
+  # returns movie or show slug (not episode or season)
+  def self.url_to_slug(url)
+    URI(url).path.split('/').reject(&:empty?)[1]
+  end
 end
 
 
-class TraktState < TraktApiWrapper
+class RainbowTime::TraktState < RainbowTime::TraktApiWrapper
   attr_reader :state, :lists, :control_lists_with_items
 
   def initialize(client, config)
@@ -73,7 +78,7 @@ class TraktState < TraktApiWrapper
 end
 
 
-class TraktData < TraktApiWrapper
+class RainbowTime::TraktData < RainbowTime::TraktApiWrapper
   # get tv shows and cache them in memory
   # get movie info
 end

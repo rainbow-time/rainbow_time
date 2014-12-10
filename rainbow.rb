@@ -10,7 +10,7 @@
 # end
 
 
-require_relative 'lib/rainbow-time.rb'
+require_relative 'lib/rainbow_time.rb'
 require_relative 'config.rb'
 
 # client = TraktApi::Client.new(config.auth)

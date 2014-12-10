@@ -1,16 +1,18 @@
 # $debug_http_party = true
 require 'trakt_api'
+require 'hashie'
 require 'deluge'
 require 'nokogiri'
 require 'active_support/inflector'
 
 require 'pp'
 
-# namespace module
-module RainbowTime;end
+module RainbowTime
+end
 
-require 'rainbow_time/core_ext.rb'
-require 'rainbow_time/traktapi_ext.rb'
-require 'rainbow_time/log_helper.rb'
-require 'rainbow_time/trakt_state.rb'
-require 'rainbow_time/data_store.rb'
+require_relative 'rainbow_time/core_ext.rb'
+require_relative 'rainbow_time/traktapi_ext.rb'
+require_relative 'rainbow_time/config.rb'
+require_relative 'rainbow_time/log_helper.rb'
+require_relative 'rainbow_time/trakt_state.rb'
+require_relative 'rainbow_time/data_store.rb'

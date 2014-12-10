@@ -16,3 +16,14 @@ class Time
     self.now.strftime("%F %T")
   end
 end
+
+
+class String
+  def clean_dashes
+    self.downcase
+      .gsub(/\s+|\[/, '-') # whitespace to dashes
+      .gsub(/-+/,'-') # no multiple dashes
+      .gsub(/[^0-9A-Za-z-]/, '') # delete all other characters
+      .gsub(/^-|-$/, '') # no dashes at beginning or end
+  end
+end

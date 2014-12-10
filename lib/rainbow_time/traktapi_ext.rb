@@ -1,4 +1,4 @@
-module ManagedApi
+module RainbowTime::ManagedTraktApi
   def response
     debug "#{@method} #{@uri} with #{request_options}"
     # todo: safe to retry several times here
@@ -23,5 +23,5 @@ module ManagedApi
 end
 
 class TraktApi::Base
-  prepend ManagedApi
+  prepend RainbowTime::ManagedTraktApi
 end
