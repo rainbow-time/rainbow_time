@@ -9,9 +9,9 @@
 # VCR.use_cassette('lists') do
 # end
 
-
-require_relative 'lib/rainbow_time.rb'
+require_relative 'lib/rainbow_time/config.rb'
 require_relative 'config.rb'
+require_relative 'lib/rainbow_time.rb'
 
 # client = TraktApi::Client.new(config.auth)
 # state = TraktState.new(client, config)

@@ -1,3 +1,7 @@
+require 'hashie'
+require 'logger'
+require 'sequel'
+
 module RainbowTime
   @config = Hashie::Mash.new
   @config.auth = Hashie::Mash.new

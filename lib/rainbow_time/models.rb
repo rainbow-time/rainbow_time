@@ -1,5 +1,4 @@
-DB = Sequel.sqlite(RainbowTime.config.database.file)
-DB.loggers << RainbowTime.config.database.logger
+Sequel::Model.raise_on_save_failure = true
 
 # timestamp everything
 Sequel::Model.plugin :timestamps
@@ -11,7 +10,15 @@ Sequel::Model.plugin :modification_detection
 Sequel::Model.plugin :auto_validations, :not_null=>:presence
 
 # http://sequel.jeremyevans.net/rdoc-plugins/classes/Sequel/Plugins/ValidationHelpers.html
+# http://sequel.jeremyevans.net/rdoc-plugins/classes/Sequel/Plugins/ValidationHelpers/InstanceMethods.html
 Sequel::Model.plugin :validation_helpers
 
-require_relative 'models/order.rb'
 require_relative 'models/media_item.rb'
+require_relative 'models/movie.rb'
+require_relative 'models/show.rb'
+require_relative 'models/order.rb'
+require_relative 'models/torrent.rb'
+require_relative 'models/torrent_media_file.rb'
+
+require_relative 'models/show_specification.rb'
+require_relative 'models/show_subset.rb'

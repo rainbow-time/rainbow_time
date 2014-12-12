@@ -1,0 +1,1 @@
+# errors.add(:show_subset, "no seasons or episodes specified") if show_subset.blank? || show_subset.seasons.blank?
