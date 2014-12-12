@@ -9,4 +9,15 @@ describe 'MediaItem' do
     item = RainbowTime::Movie['my-movie']
     expect(item.type).to eq 1
   end
+
+  it 'serializes show specification' do
+    ss = RainbowTime::ShowSpecification.new({1 => {:episodes => [1, 2]}})
+    item = RainbowTime::Show.new(show_specification: ss, title: 'My Show', year: 1999, trakt_url: 'http://blah.blah', tvdb_id: '123tvdb')
+    item.slug = 'my-show'
+    item.save
+
+    loaded_item = RainbowTime::Show['my-show']
+    expect(loaded_item.show_specification.seasons[1]).to eq({episodes: [1, 2]})
+    expect(loaded_item.show_specification.seasons).to eq item.show_specification.seasons
+  end
 end

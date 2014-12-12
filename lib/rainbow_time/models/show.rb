@@ -1,7 +1,8 @@
 class RainbowTime::Show < RainbowTime::MediaItem
-  # tvrage_id
+  plugin :serialization, :show_specification_yaml, :show_specification
+  plugin :serialization_modification_detection
+
   def validate
-    super
     validates_presence :tvdb_id
   end
 end

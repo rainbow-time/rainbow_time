@@ -13,6 +13,9 @@ DB.create_table(:media_items) do
   String  :tvdb_id, default: ""
   String  :tvrage_id, default: ""
 
-  String  :show_specification, text: true, default: nil
+  String    :show_specification, :text => true, default: ""
+
+  DateTime :created_at, null: false
+  DateTime :updated_at
 end
 
