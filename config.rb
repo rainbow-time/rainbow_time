@@ -1,4 +1,4 @@
-RainbowTime.config.data_store_dir = File.expand_path("../rainbow-data-store", File.dirname(__FILE__))
+RainbowTime.config.database.file = File.expand_path("db/rainbow.rb", File.dirname(__FILE__))
 
 # config.auth.username = 'yourname'
 # config.auth.api_key = 'yourkey'

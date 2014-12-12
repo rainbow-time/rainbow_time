@@ -1,3 +1,4 @@
 reference
 vcr_cassettes
 auth_config.rb
+db/rainbow.db
