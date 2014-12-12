@@ -17,9 +17,13 @@ module RainbowTime
   @config.database.logger = Logger.new($stdout)
   @config.database.logger.progname = '{sequel}'
 
+  @config.database.logger.level = Logger::WARN
+
+
   @config.logger = Logger.new($stdout)
 
   @config.logger.formatter = proc do |severity, datetime, progname, msg|
+    return "" if prograname == '{sequel}'
     "#{datetime.timestamp} #{severity} #{progname} #{msg}\n"
   end
 
