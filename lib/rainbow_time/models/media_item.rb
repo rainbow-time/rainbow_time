@@ -4,4 +4,5 @@ class RainbowTime::MediaItem < Sequel::Model
           model_map: {1 => "RainbowTime::Movie", 2 => "RainbowTime::Show"}
 
   one_to_many :orders
+  one_to_many :torrents
 end

@@ -13,11 +13,13 @@ Sequel::Model.plugin :auto_validations, :not_null=>:presence
 # http://sequel.jeremyevans.net/rdoc-plugins/classes/Sequel/Plugins/ValidationHelpers/InstanceMethods.html
 Sequel::Model.plugin :validation_helpers
 
+# Add boolean attribute? methods for all columns of type :boolean
+# in all model subclasses (called before loading subclasses)
+Sequel::Model.plugin :boolean_readers
+
 # Sequel::Model.plugin :instance_hooks
 
-
 require_relative 'models/show_specification.rb'
-require_relative 'models/show_subset.rb'
 
 require_relative 'models/media_item.rb'
 require_relative 'models/movie.rb'
