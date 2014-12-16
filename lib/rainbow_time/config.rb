@@ -23,7 +23,7 @@ module RainbowTime
   @config.logger = Logger.new($stdout)
 
   @config.logger.formatter = proc do |severity, datetime, progname, msg|
-    return "" if prograname == '{sequel}'
+    return "" if progname == '{sequel}'
     "#{datetime.timestamp} #{severity} #{progname} #{msg}\n"
   end
 

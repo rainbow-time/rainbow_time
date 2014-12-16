@@ -32,4 +32,8 @@ FactoryGirl.define do
     sequence(:name) {|n| "my show or movie #{n} [133t krew]"}
   end
 
+  factory :torrent_media_file, :class => RainbowTime::TorrentMediaFile do
+    sequence(:filename) {|n| "/media/video_file_#{n}.avi"}
+    sequence(:subtitle_filename) {|n| "/media/video_subtitle_#{n}.srt"}
+  end
 end

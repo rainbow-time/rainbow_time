@@ -57,7 +57,7 @@ DB.create_join_table(order_id: :orders, torrent_id: :torrents)
 DB.create_table(:torrent_media_files) do
   primary_key :id
 
-  foreign_key :torrents_id, :torrents
+  foreign_key :torrent_id, :torrents, null: false
 
   Text  :filename, null: false
   Text  :subtitle_filename, null: true
