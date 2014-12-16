@@ -52,7 +52,9 @@ DB.create_table(:torrents) do
   Integer :state, null: false, default: 0
 end
 
+
 DB.create_join_table(order_id: :orders, torrent_id: :torrents)
+
 
 DB.create_table(:torrent_media_files) do
   primary_key :id

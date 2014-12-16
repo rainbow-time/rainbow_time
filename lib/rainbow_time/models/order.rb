@@ -12,28 +12,6 @@ class RainbowTime::Order < Sequel::Model
 
   enum :state, [:new, :specified, :resolved, :downloaded]
   enum :trakt_state, [:new, :processed]
-  # skip_type_auto_validation :trakt_state
-  # skip_type_auto_validation :state
-
-  # def validate
-    # super
-    # validates_schema_types(keys - [:state])
-  # end
-
-  # subset(:with_state_new, :state => 0)
-
-  # def state=(s)
-  #   i = STATES.index(s)
-  #   if i
-  #     super(i)
-  #   else
-  #     self.db.log_each("invalid state '#{s}' for ")
-  #   end
-  # end
-
-  # def state
-  #   STATES[super]
-  # end
 
   def state?(s)
     state == s
