@@ -10,18 +10,32 @@ class RainbowTime::Order < Sequel::Model
   # TrueClass :trakt_state_synced, default: true   # Boolean
   # Integer   :state, null: false, default: 0
 
-  STATES = [:new, :specified, :resolved, :downloaded]
+  enum :state, [:new, :specified, :resolved, :downloaded]
+  enum :trakt_state, [:new, :processed]
+  # skip_type_auto_validation :trakt_state
+  # skip_type_auto_validation :state
 
-  def state=(s)
-    i = STATES.index(s)
-    if i
-      @values[:state] = i
-    else
-      warn "invalid state"
-    end
-  end
+  # def validate
+    # super
+    # validates_schema_types(keys - [:state])
+  # end
 
-  def state
-    STATES[@values[:state]]
+  # subset(:with_state_new, :state => 0)
+
+  # def state=(s)
+  #   i = STATES.index(s)
+  #   if i
+  #     super(i)
+  #   else
+  #     self.db.log_each("invalid state '#{s}' for ")
+  #   end
+  # end
+
+  # def state
+  #   STATES[super]
+  # end
+
+  def state?(s)
+    state == s
   end
 end

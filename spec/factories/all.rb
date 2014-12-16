@@ -19,7 +19,14 @@ FactoryGirl.define do
   end
 
   factory :order, :class => RainbowTime::Order do
+    association :media_item, factory: :movie
+    type 0
+    state :new
+    trakt_state :new
+    trakt_state_synced true
+
     factory :season_order do
+      association :media_item, factory: :show
       season 5
       factory :episode_order do
         episode 7
