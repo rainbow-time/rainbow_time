@@ -66,6 +66,7 @@ class RainbowTime::TraktState < RainbowTime::TraktApiWrapper
       list = lists.find{|l| l.name == name}
       # load full data
       debug "loading items for `#{name}` control list"
+      # CONCURRENT
       control_lists_with_items[key] = client.user.list(slug: list.slug, **with_auth)
     end
   end

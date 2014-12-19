@@ -17,7 +17,8 @@ DB.create_table(:media_items) do
   String  :tvdb_id, default: ""
   String  :tvrage_id, default: ""
 
-  String   :show_specification, :text => true, default: ""
+  String    :show_specification, :text => true, default: ""
+  TrueClass :heuristic_guess, default: false   # Boolean
 
   DateTime :created_at, null: false
   DateTime :updated_at
@@ -37,6 +38,9 @@ DB.create_table(:orders) do
   TrueClass :trakt_state_synced, default: true   # Boolean
 
   Integer   :state, null: false, default: 0
+
+  DateTime :created_at, null: false
+  DateTime :updated_at
 end
 
 
@@ -50,6 +54,9 @@ DB.create_table(:torrents) do
 
   String  :name, null: false
   Integer :state, null: false, default: 0
+
+  DateTime :created_at, null: false
+  DateTime :updated_at
 end
 
 
@@ -70,4 +77,7 @@ DB.create_table(:torrent_media_files) do
   # index by season, episode, etc
   index :season, unique: false
   index [:season, :episode], unique: false
+
+  DateTime :created_at, null: false
+  DateTime :updated_at
 end
