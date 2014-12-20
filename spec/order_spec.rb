@@ -26,4 +26,12 @@ describe 'Order' do
     expect(order1.state?(:specified)).to eq true
     expect(RainbowTime::Order.state_is_specified.all).to eq([order1])
   end
+
+  it "has state dataset method" do
+    order1 = create(:order)
+    order2 = create(:order, state: :specified)
+
+    expect(RainbowTime::Order.by_state(:new).all).to eq([order1])
+    expect(RainbowTime::Order.by_state(:specified).all).to eq([order2])
+  end
 end

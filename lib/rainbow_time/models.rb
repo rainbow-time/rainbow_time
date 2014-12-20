@@ -69,6 +69,17 @@ class Sequel::Model
       self.subset("#{column}_is_#{val}".to_sym, column => index)
     end
 
+    self.dataset_module do
+      self.send(:define_method, "by_#{column}".to_sym) do |enum_value|
+        index = values.index(enum_value)
+        if index
+          where(column.to_sym => index)
+        else
+          self.db.send(:log_each, :warn, "invalid value '#{enum_value}' for #{self.model}.#{column}")
+        end
+      end
+    end
+
   end
 end
 
