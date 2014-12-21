@@ -3,4 +3,8 @@ class RainbowTime::Movie < RainbowTime::MediaItem
     super
     validates_presence :imdb_id
   end
+
+  def movie?
+    true
+  end
 end

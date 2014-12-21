@@ -5,4 +5,12 @@ class RainbowTime::MediaItem < Sequel::Model
 
   one_to_many :orders
   one_to_many :torrents
+
+  def show?
+    false
+  end
+
+  def movie?
+    false
+  end
 end

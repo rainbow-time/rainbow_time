@@ -13,6 +13,14 @@ class RainbowTime::Order < Sequel::Model
   enum :state, [:new, :specified, :resolved, :downloaded]
   enum :trakt_state, [:new, :processed]
 
+  def self.order_types
+    [:movie, :show]
+  end
+
+  def self.order_types(type)
+    order_types.index(type.to_sym)
+  end
+
   def state?(s)
     state == s
   end

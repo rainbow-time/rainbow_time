@@ -10,6 +10,8 @@ require 'sequel'
 
 require 'deluge'
 require 'nokogiri'
+require 'memoist'
+
 
 module RainbowTime
 end

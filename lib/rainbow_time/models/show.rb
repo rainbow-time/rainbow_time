@@ -5,4 +5,8 @@ class RainbowTime::Show < RainbowTime::MediaItem
   def validate
     validates_presence :tvdb_id
   end
+
+  def show?
+    true
+  end
 end

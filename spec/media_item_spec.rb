@@ -8,6 +8,14 @@ describe 'MediaItem' do
     expect(movie.type).to eq 0
   end
 
+  it 'loads correct type' do
+    movie = create(:movie)
+
+    found = RainbowTime::MediaItem.where(:slug => movie.slug).first
+
+    expect(found).to be_a(RainbowTime::Movie)
+  end
+
   it 'serializes show specification' do
     item = create(:show)
     item.show_specification = RainbowTime::ShowSpecification.new({1 => {:episodes => [1, 2]}})

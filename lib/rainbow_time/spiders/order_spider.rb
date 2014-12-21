@@ -38,6 +38,7 @@ class RainbowTime::OrderSpider
     @processed_list = client.user.list(slug: @processed_list.slug, **with_auth)
 
     @orders_list.items.each do |trakt_list_item|
+      trakt_order_item = RainbowTime::TraktOrderItem.new(trakt_list_item)
       add_order_if_missing(trakt_list_item)
     end
 
@@ -47,6 +48,7 @@ class RainbowTime::OrderSpider
   end
 
   def add_order_if_missing(trakt_order)
+    find_existing_order(trakt_order)
   end
 
   def sync_to_trakt(order)

@@ -11,11 +11,6 @@ class RainbowTime::TraktApiWrapper
   def with_auth
     @with_auth.clone
   end
-
-  # returns movie or show slug (not episode or season)
-  def self.url_to_slug(url)
-    URI(url).path.split('/').reject(&:empty?)[1]
-  end
 end
 
 
