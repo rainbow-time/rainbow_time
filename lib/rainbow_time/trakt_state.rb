@@ -29,6 +29,7 @@ class RainbowTime::TraktState < RainbowTime::TraktApiWrapper
   end
 
   def missing_control_lists?
+    pp lists; exit
     all_lists_names = lists.map(&:name)
     (control_lists_names & all_lists_names) != control_lists_names # set intersection
   end
@@ -44,7 +45,7 @@ class RainbowTime::TraktState < RainbowTime::TraktApiWrapper
 
   def load_lists
     debug 'loading lists'
-    @lists = client.user.lists(**with_auth)
+    @lists = mash(client.user.lists(**with_auth))
   end
 
   def load_or_create_lists

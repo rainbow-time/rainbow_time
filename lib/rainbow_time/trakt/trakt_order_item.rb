@@ -60,7 +60,6 @@ class RainbowTime::TraktOrderItem
     if movie?
       return media_item.orders.first
     end
-
     media_item.orders.where(season: season, episode: episode_num).first
   end
 

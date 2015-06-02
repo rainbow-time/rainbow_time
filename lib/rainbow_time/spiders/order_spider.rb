@@ -44,7 +44,6 @@ class RainbowTime::OrderSpider
 
     unsynced_orders = RainbowTime::Orders.where(trakt_state_synced: false)
     unsynced_orders.each {|order| sync_to_trakt(order)}
-
   end
 
   def add_order_if_missing(trakt_order)

@@ -13,8 +13,12 @@ require_relative 'lib/rainbow_time/config.rb'
 require_relative 'config.rb'
 require_relative 'lib/rainbow_time.rb'
 
-# client = TraktApi::Client.new(config.auth)
-# state = TraktState.new(client, config)
+
+# require 'trakt_api'
+# require_relative 'lib/rainbow_time/trakt_state.rb'
+# client = TraktApi::Client.new(RainbowTime.config.auth)
+# client.
+# state = RainbowTime::TraktState.new(client, RainbowTime.config)
 # state.sync!
 
 # pp state.control_lists_with_items
