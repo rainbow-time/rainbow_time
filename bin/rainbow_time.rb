@@ -15,6 +15,7 @@ else
   settings = {}
 end
 
+settings['categorized_dir'] ||= 'D:\Categorized'
 settings['logfile'] ||= 'C:\rainbow_time\run.log'
 settings['deluge_user'] ||= 'rainbow_time'
 settings['deluge_pass'] ||= 'rainbowrainbowrainbow'
@@ -26,7 +27,8 @@ begin
   require_relative '../lib/deluge_supervisor.rb'
   supe = DelugeSupervisor.new(settings)
   supe.sayhi
-  supe.list_torrent_contents
+  # supe.list_torrent_contents
+  supe.test_rename_and_move
 rescue Exception => e
   pp e
   puts e.backtrace
