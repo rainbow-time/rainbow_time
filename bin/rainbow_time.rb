@@ -16,15 +16,17 @@ else
 end
 
 settings['logfile'] ||= 'C:\rainbow_time\run.log'
+settings['deluge_user'] ||= 'rainbow_time'
+settings['deluge_pass'] ||= 'rainbowrainbowrainbow'
 
 puts "Settings (file and defaults): "
 pp settings
-
 
 begin
   require_relative '../lib/deluge_supervisor.rb'
   supe = DelugeSupervisor.new(settings)
   supe.sayhi
+  supe.list_torrent_contents
 rescue Exception => e
   pp e
   puts e.backtrace
