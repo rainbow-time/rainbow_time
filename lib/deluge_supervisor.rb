@@ -28,14 +28,27 @@ class DelugeSupervisor
       t = core.get_torrent_status(tid, ["name", "label"])
       next if t['label'].include?(@managed_label)
 
-      t = core.get_torrent_status(tid, ["name", "files", "hash"])
+      name = t['name']
+      begin
+        t = core.get_torrent_status(tid, ["name", "files", "hash"])
+      rescue Exception => e
+        error "Failed to read torrent files '#{name}' #{tid}: #{e.message}"
+        @client.connect
+        next
+      end
       process_torrent(t)
     end
   end
 
   def process_torrent(t)
     name = t['name']
+    info "processing torrent '#{name}'"
     categorizer = TorrentCategorizer.new(name, t['files'])
+
+    unless categorizer.is_categorizable_video?
+      info "skipping non-video torrent '#{name}'"
+      return
+    end
 
     if categorizer.is_tv?
       process_tv_torrent(t)
