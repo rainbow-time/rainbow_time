@@ -28,7 +28,8 @@ begin
   supe = DelugeSupervisor.new(settings)
   supe.sayhi
   # supe.list_torrent_contents
-  supe.test_rename_and_move
+  # supe.test_rename_and_move
+  supe.test_torrent_contents
 rescue Exception => e
   pp e
   puts e.backtrace

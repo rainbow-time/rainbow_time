@@ -12,6 +12,8 @@ class DelugeSupervisor
     )
     @client.connect
 
+    @managed_label = 'rainbow-managed'
+
     puts ":::: logged in to deluge! ::::"
   end
 
@@ -50,12 +52,36 @@ class DelugeSupervisor
     puts "DID rename test!"
   end
 
+  # label docs: http://git.deluge-torrent.org/deluge/tree/deluge/plugins/label/label/core.py?h=1.3-stable
+  def test_plugins
+    tid = 'a39ec0316df1037e00fb0b8c2e7e6d669b963d2f'
+    # pp client.core.get_available_plugins
+    client.core.enable_plugin('Label')
+    unless client.label.get_labels.include?(@managed_label)
+      client.label.add(@managed_label)
+    end
+
+    client.label.set_torrent(tid, @managed_label)
+    pp client.label.get_config
+    pp client.label.get_labels
+    puts "PLUGINS done"
+  end
+
+  def test_get_torrent_label
+    tid = 'a39ec0316df1037e00fb0b8c2e7e6d669b963d2f'
+    puts "looking up torrent..."
+    # client.core.set_torrent_move_completed(tid, false) # tested
+    torrent = client.core.get_torrent_status(tid, ["name", "label"])
+    puts tid + "    ---    " + torrent["name"]
+    pp torrent['label']
+  end
+
   def list_torrent_contents
     torrent_ids =  client.core.get_session_state
     torrent_ids.each do |tid|
-      torrent = client.core.get_torrent_status(tid, ["name", "files"])
+      torrent = client.core.get_torrent_status(tid, ["name", "files", "label"])
       puts tid + "    ---    " + torrent["name"]
-      pp torrent['files']
+      pp torrent['label']
       puts "--------"
     end
   end
