@@ -2,12 +2,17 @@ require 'deluge'
 require_relative 'torrent_categorizer.rb'
 
 class DelugeSupervisor
-  attr_reader :client
-  attr_reader :core
+  attr_reader :settings
+  attr_reader :client, :core
 
   def initialize(settings)
     @settings = settings
+    @managed_label = settings['deluge_label']
 
+    establish_connection
+  end
+
+  def establish_connection
     @client = Deluge::Api::Client.new(
         host: settings['deluge_host'], port: settings['deluge_port'],
         login: settings['deluge_user'], password: settings['deluge_pass']
@@ -15,10 +20,9 @@ class DelugeSupervisor
     @client.connect
     @core = client.core
 
-    @managed_label = settings['deluge_label']
-
-    puts ":::: logged in to deluge! ::::"
+    info "Connected to Deluge!"
   end
+
 
   def process_torrents
     configure_labels_plugin
@@ -72,7 +76,13 @@ class DelugeSupervisor
   end
 
   def configure_labels_plugin
-    core.enable_plugin('Label')
+    enabled_plugins = core.get_enabled_plugins || [] # returns nil if array is empty
+    unless enabled_plugins.include?('Label')
+      info "Enabling plugin 'Label' and reconnecting to Deluge"
+      core.enable_plugin('Label')
+      establish_connection # reload RPC methods
+    end
+
     unless client.label.get_labels.include?(@managed_label)
       client.label.add(@managed_label)
     end
