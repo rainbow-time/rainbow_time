@@ -13,14 +13,14 @@ class DelugeSupervisor
   end
 
   def establish_connection
-    @client = Deluge::Api::Client.new(
+    @client = Deluge::Rpc::Client.new(
         host: settings['deluge_host'], port: settings['deluge_port'],
         login: settings['deluge_user'], password: settings['deluge_pass']
     )
     @client.connect
     @core = client.core
 
-    info "Connected to Deluge!"
+    info "Connected to deluged #{@client.daemon.info}! Auth level = #{@client.auth_level}"
   end
 
 
