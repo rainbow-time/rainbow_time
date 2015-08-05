@@ -28,9 +28,14 @@ class DelugeSupervisor
     configure_labels_plugin
 
     torrent_ids = core.get_session_state
+    # DEBUG
+    # torrent_ids = 
     torrent_ids.each do |tid|
       t = core.get_torrent_status(tid, ["name", "label"])
-      next if t['label'].include?(@managed_label)
+      if t['label'].include?(@managed_label)
+        debug "skipping already processed torrent '#{t['name']}'"
+        next
+      end
 
       name = t['name']
       begin
@@ -46,33 +51,32 @@ class DelugeSupervisor
 
   def process_torrent(t)
     name = t['name']
-    info "processing torrent '#{name}'"
-    categorizer = TorrentCategorizer.new(name, t['files'])
+    debug "processing torrent '#{name}'  [#{t['hash']}]"
+    categorizer = TorrentCategorizer.new(t['hash'], name, t['files'])
 
     unless categorizer.is_categorizable_video?
-      info "skipping non-video torrent '#{name}'"
+      debug "skipping because it's a non-video torrent"
       return
     end
 
     if categorizer.is_tv?
       process_tv_torrent(t)
-    elsif categorizer.is_movie?
+    else categorizer.is_movie?
       process_movie_torrent(t)
-    else
-      info "skipping unknown type torrent '#{name}'"
-      return
     end
 
-    info "adding label '#{@managed_label}' to '#{name}'"
+    info "processed! adding label: '#{@managed_label}'"
     # client.label.set_torrent(tid, @managed_label)
   end
 
 
   def process_tv_torrent(t)
+    debug "processing TV"
   end
 
 
   def process_movie_torrent(t)
+    debug "processing movie"
   end
 
   def configure_labels_plugin

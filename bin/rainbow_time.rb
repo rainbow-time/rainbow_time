@@ -42,7 +42,7 @@ $logger.formatter = pretty_log_formatter
 begin
   require_relative '../lib/deluge_supervisor.rb'
   supe = DelugeSupervisor.new(settings)
-  supe.process_torrents
+  # supe.process_torrents
   # supe.list_torrent_contents
   # supe.test_rename_and_move
   # supe.test_get_torrent_label

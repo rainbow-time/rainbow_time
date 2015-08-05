@@ -1,4 +1,5 @@
 #!/bin/bash
 
-cp -r * /run/user/1000/gvfs/smb-share:server=zbox,share=rainbow_time
+scp -r * zbox:'c:\rainbow_time'
+echo "done uploading!"
 ssh zbox 'cd c:\rainbow_time; bundle install'
