@@ -1,7 +1,6 @@
 #!/bin/bash
 
-scp -r * zbox:'c:\rainbow_time'
-echo "done uploading!"
+scp -r * zbox:'c:/rainbow_time'
+echo "SCP finished uploading!"
 
-# -t makes output print immediately
-ssh -t zbox 'cd c:\rainbow_time; bundle install'
+ssh zbox 'cd c:\rainbow_time; bundle install'
