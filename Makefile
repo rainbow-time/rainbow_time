@@ -1,0 +1,3 @@
+all:
+	./run-remote.sh
+

@@ -13,11 +13,15 @@ class DelugeSupervisor
   end
 
   def establish_connection
-    @client = Deluge::Rpc::Client.new(
-        host: settings['deluge_host'], port: settings['deluge_port'],
-        login: settings['deluge_user'], password: settings['deluge_pass']
-    )
+    host = settings['deluge_host']
+    port = settings['deluge_port']
+    user = settings['deluge_user']
+    pass = settings['deluge_pass']
+
+    info "Connecting to deluged #{user}@#{host}:#{port}..."
+    @client = Deluge::Rpc::Client.new(host: host, port: port, login: user, password: pass)
     @client.connect
+    sleep 10
     @core = client.core
 
     info "Connected to deluged #{@client.daemon.info}! Auth level = #{@client.auth_level}"
@@ -51,17 +55,17 @@ class DelugeSupervisor
 
   def process_torrent(t)
     name = t['name']
-    debug "processing torrent '#{name}'  [#{t['hash']}]"
+    info "processing torrent '#{name}'  [#{t['hash']}]"
     categorizer = TorrentCategorizer.new(t['hash'], name, t['files'])
+    categorizer.process!
 
-    unless categorizer.is_categorizable_video?
+    case categorizer.category
+    when :non_video
       debug "skipping because it's a non-video torrent"
       return
-    end
-
-    if categorizer.is_tv?
+    when :tv
       process_tv_torrent(t)
-    else categorizer.is_movie?
+    when :movie
       process_movie_torrent(t)
     end
 
