@@ -1,4 +1,7 @@
 require 'deluge'
+require 'nokogiri'
+require 'concurrent'
+
 require_relative 'torrent_categorizer.rb'
 
 class DelugeSupervisor
@@ -21,7 +24,6 @@ class DelugeSupervisor
     info "Connecting to deluged #{user}@#{host}:#{port}..."
     @client = Deluge::Rpc::Client.new(host: host, port: port, login: user, password: pass)
     @client.connect
-    sleep 10
     @core = client.core
 
     info "Connected to deluged #{@client.daemon.info}! Auth level = #{@client.auth_level}"
