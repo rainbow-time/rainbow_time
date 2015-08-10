@@ -1,14 +1,16 @@
-require_relative 'log_helpers.rb'
+require 'pp'
 
-STDOUT.sync = true
-STDERR.sync = true
+module RainbowTime; end
 
-$logger = Logger.new($stdout)
-$logger.formatter = pretty_log_formatter
-$logger.level = Logger::INFO
-
+require_relative 'rainbow_time/log_helpers.rb'
+RainbowTime::LogHelpers.set_global_logger($stdout)
 
 info "Welcome to hellscape!"
+
+require_relative 'rainbow_time/settings.rb'
+RainbowTime.load_settings
+pp RainbowTime.settings
+exit
 
 config_path = ENV['APPDATA'] + '\rainbow_time\settings.yml'
 debug "pwd: #{Dir.pwd}"
@@ -40,7 +42,7 @@ debug "Settings (file and defaults): "
 debug settings.inspect
 
 
-
+exit
 begin
   require_relative 'deluge_supervisor.rb'
   supe = DelugeSupervisor.new(settings)

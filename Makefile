@@ -1,3 +1,4 @@
 all:
-	./run-remote.sh
+	~/.rvm/bin/rvm default do ruby bin/rainbow_time.rb
+	
 
