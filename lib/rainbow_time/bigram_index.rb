@@ -31,7 +31,7 @@ class BigramIndex
     # permutate into titles with apostrophes cut if possible
     titles.each do |title|
       words = sanitize_string(title).split(/\s+/)
-      scrubbed_words = words.map {|w| remove_apostrophe(w)}
+      scrubbed_words = words.map {|w| touchup_string(w)}
       
       word_sets << words
       word_sets << scrubbed_words if scrubbed_words != words
@@ -78,13 +78,13 @@ class BigramIndex
 
     # converts hash to array
     bigram_hits = bigram_hits.sort {|m1, m2| m1.last <=> m2.last}
-    top5 = bigram_hits.reverse[0,5]
+    bigram_hits.reverse!
     # if no clear winner
-    if top5.count > 1 && top5[0].last == top5[1].last
-      sort_bigram_results_by_edit_distance(top5, words.join(' '))
+    if bigram_hits.count > 1 && bigram_hits[0].last == bigram_hits[1].last
+      sort_bigram_results_by_edit_distance(bigram_hits, words.join(' '))
     end
 
-    best_result = top5.first
+    best_result = bigram_hits.first
     return nil unless best_result
     
     key = best_result.first
@@ -107,7 +107,7 @@ class BigramIndex
       id, sub_id = *key
 
       title = @index[:titles][id][sub_id]
-      p id
+      puts "#{title}: #{DamerauLevenshtein.distance(title, query_title)}"
       # set score based on edit distance
       # edit distance of 0 means same string and higher edit scores = less similarity
       result[1] = 1000 - DamerauLevenshtein.distance(title, query_title)
@@ -132,9 +132,10 @@ class BigramIndex
     str
   end
 
-  def remove_apostrophe(word)
+  def touchup_string(word)
     word = word.gsub(/'s$/, 's')
     word.gsub!(/'/, ' ')
+    word.gsub!(/:/, '')
     word
   end
 end
