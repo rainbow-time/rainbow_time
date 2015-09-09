@@ -1,25 +1,24 @@
-require 'pp'
-
 module RainbowTime; end
 
+require_relative 'rainbow_time/core_ext.rb'
 require_relative 'rainbow_time/log_helpers.rb'
-RainbowTime::LogHelpers.set_global_logger($stdout)
+require_relative 'rainbow_time/settings.rb'
 
+
+RainbowTime::LogHelpers.set_global_logger($stdout)
 info "Welcome to hellscape!"
 
-require_relative 'rainbow_time/settings.rb'
 RainbowTime.load_settings
-debug "Final settings: \n" + RainbowTime.settings.pretty_inspect
+debug "Using settings: \n" + RainbowTime.settings.pretty_inspect
 
-begin
-  require_relative 'deluge_supervisor.rb'
-  supe = DelugeSupervisor.new(settings)
-  supe.process_torrents
-  # supe.list_torrent_contents
-  # supe.test_rename_and_move
-  # supe.test_get_torrent_label
-rescue Exception => e
-  error e.inspect
-  error e.backtrace
-  exit 1
+require_relative 'rainbow_time/main_loop.rb'
+
+module RainbowTime
+  attr_reader :main_loop
+
+  def self.start
+    @main_loop = MainLoop.new
+    @main_loop.run
+  end
 end
+

@@ -5,14 +5,17 @@ module RainbowTime
   class << self
     attr_reader :settings, :settings_file_path
 
-    def load_settings_file
+    def config_dir
       config_base_dir = if ENV['APPDATA']
         ENV['APPDATA']
       else
         File.join(ENV['HOME'], '.config')
       end
+      File.join(config_base_dir, 'rainbow_time')
+    end
 
-      @settings_file_path = File.join(config_base_dir, 'rainbow_time/settings.yml')
+    def load_settings_file
+      @settings_file_path = File.join(config_dir, 'settings.yml')
       if File.exists?(settings_file_path)
         Mash.load(settings_file_path)
       else
@@ -27,6 +30,8 @@ module RainbowTime
     def default_settings
       Mash.new({
         logfile: 'C:/rainbow_time/run.log',
+        config_dir: config_dir,
+        moneta_dir: File.join(config_dir, 'moneta'),
         folder: {
           tv: 'TV',
           movies: 'Movies',
@@ -35,10 +40,12 @@ module RainbowTime
           incomplete: 'Incomplete'
         },
         deluge: {
-          host: '127.0.0.1',
-          port: '58846',
-          user: 'rainbow_time',
-          pass: 'rainbowrainbowrainbow',
+          connection: {
+            host: '127.0.0.1',
+            port: '58846',
+            login: 'rainbow_time',
+            password: 'rainbowrainbowrainbow'
+          },
           managed_label: 'rainbow-managed'
         },
         move_completed: false
